@@ -17,7 +17,6 @@ class _apiFitbit extends State<apiFitbit>
   @override
   void dispose() {
     _apiforSmartwatchController.dispose();
-
     super.dispose();
   }
 
