@@ -34,9 +34,12 @@ class _SignUpScreenState extends State<SignUpScreen>
       TextEditingController(text: '');
   late TextEditingController _Date_of_BirthTextController =
       TextEditingController(text: '');
-
-  late TextEditingController _haveChronicTextController =
+  late TextEditingController _SearchChronicDiseaseController =
       TextEditingController(text: '');
+  late TextEditingController _haveChronicTextController =
+  TextEditingController(text: '');
+  late   ScrollController _haveChronicScrollController =
+  ScrollController();
 
   // late TextEditingController _haveDiseaseTextController =
   //     TextEditingController(text: '');
@@ -85,6 +88,8 @@ class _SignUpScreenState extends State<SignUpScreen>
     _positionFocusNode.dispose();
     _phoneFocusNode.dispose();
     _haveChronicFocusNode.dispose();
+    _SearchChronicDiseaseController.dispose();
+
 
     super.dispose();
   }
@@ -480,16 +485,16 @@ class _SignUpScreenState extends State<SignUpScreen>
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: Text(
-                        'Do you have chronic diseases if yes Pressed in  ',
+                        'Do you have chronic diseases?',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
                   ],
                 ),
               ),
@@ -604,7 +609,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           'weight': _weightTextController.text,
           'height': _heightTextController.text,
           'position': _positionCPTextController.text,
-          'Date of Birth' : _Date_of_BirthTextController.text,
+          'Date of Birth': _Date_of_BirthTextController.text,
           if (_haveChronicTextController.text == '')
             'have Chronic Disease': "No Have Chronic Disease",
           if (_haveChronicTextController.text != '')
@@ -736,59 +741,88 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 
   void showChronicDiseases(size) {
+    List<String>? searchList = Constants.chronicDiseases.toList();
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'chronic diseases',
-              style: TextStyle(color: Colors.pink.shade300, fontSize: 20),
-            ),
-            content: Container(
-              width: size.width * 0.9,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: Constants.chronicDiseases.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _haveChronicTextController.text =
-                              Constants.chronicDiseases[index];
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.check_circle_rounded,
-                            color: Colors.red[200],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              Constants.chronicDiseases[index],
-                              style: TextStyle(
-                                  color: Color(0xFF00325A),
-                                  fontSize: 20,
-                                  // fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.canPop(context) ? Navigator.pop(context) : null;
-                },
-                child: Text('Close'),
+          return StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+              title: Text(
+                'chronic disease',
+                style: TextStyle(color: Colors.pink.shade300, fontSize: 20),
               ),
-              TextButton(onPressed: () {}, child: Text('Cancel filter'))
-            ],
+              content: Column(
+                children: [
+                  Container(
+                    width: size.width * 0.9,
+                    height: 20,
+                    child: TextField(
+                      controller: _SearchChronicDiseaseController,
+                      onChanged: (value) {
+                        searchList = [];
+                        setState(() {
+                          searchList = Constants.chronicDiseases
+                              .where((element) => element
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()))
+                              .toList();
+                          print(_SearchChronicDiseaseController.text);
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: size.width * 0.9,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount:  _SearchChronicDiseaseController.text.isEmpty ? Constants.chronicDiseases.length:searchList!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _haveChronicTextController.text =
+                                  _SearchChronicDiseaseController.text.isEmpty ? Constants.chronicDiseases[index]:searchList![index];
+                                });
+                                Navigator.pop(context);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle_rounded,
+                                    color: Colors.red[200],
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        _SearchChronicDiseaseController.text.isEmpty ? Constants.chronicDiseases[index]:searchList![index],
+                                        style: TextStyle(
+                                            color: Color(0xFF00325A),
+                                            fontSize: 20,
+                                            // fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.canPop(context) ? Navigator.pop(context) : null;
+                  },
+                  child: Text('Close'),
+                ),
+                TextButton(onPressed: () {}, child: Text('Cancel filter'))
+              ],
+            ),
           );
         });
   }

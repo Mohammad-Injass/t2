@@ -84,13 +84,13 @@ class DrawerWidget extends StatelessWidget {
   }
 
   void _healthStatusScreen(context) {
-    final User? user = _auth.currentUser;
-    final _uId = user!.uid;
+    // final User? user = _auth.currentUser;
+    // final _uId = user!.uid;
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => healthStatusScreen(userID: _uId),
+        builder: (context) => healthStatusScreen(userID: "_uId"),
       ),
     );
   }

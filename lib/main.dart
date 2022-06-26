@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Flutter WorkOs Arabic',
+            title: 'Flutter Workouts Arabic',
             theme: ThemeData(
               scaffoldBackgroundColor: Color(0xFFEDE7DC),
               primarySwatch: Colors.blue,

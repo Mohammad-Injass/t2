@@ -11,8 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../widgets/drawer_widget.dart';
 
-
-
 class healthStatusScreen extends StatefulWidget {
   final String userID;
   const healthStatusScreen({required this.userID});
@@ -22,7 +20,6 @@ class healthStatusScreen extends StatefulWidget {
 }
 
 class _healthStatusScreen extends State<healthStatusScreen> {
-
   String phoneNumber = "";
 
   @override
@@ -57,11 +54,9 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                 SizedBox(
                   height: 15,
                 ),
-
                 Text(
                   "Heart Rate",
-                  style: TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 15,
@@ -73,15 +68,35 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                       color: secondary.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(30)),
                   // width: double.infinity,
-                  child: LineChart(activityData(Constants.combinationHeart, 140)),
+                  child:
+                      LineChart(activityData(Constants.combinationHeart, 140)),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Steps",
-                  style: TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      color: secondary.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(30)),
+                  // width: double.infinity,
+                  child:
+                      LineChart(activityData(Constants.combinationSteps, 140)),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Calories",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 15,
@@ -93,62 +108,38 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                       color: secondary.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(30)),
                   // width: double.infinity,
-                  child: LineChart(activityData(Constants.combinationSteps, 140)),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-
-                Text(
-                  "Calories",
-                  style: TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-
-                Container(
-                  width: double.infinity,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      color: secondary.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(30)),
-                  // width: double.infinity,
-                  child: LineChart(activityData(Constants.combinationCalories, 15)),
+                  child: LineChart(
+                      activityData(Constants.combinationCalories, 15)),
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
-                  "rr",
-                  style: TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
+                  "Last Suggestion:",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 15,
                 ),
-
                 Container(
                   width: double.infinity,
                   height: 150,
                   decoration: BoxDecoration(
-                      color: secondary.withOpacity(0.5),
-                      // borderRadius: BorderRadius.circular(30)
-                    ),
+                    color: secondary.withOpacity(0.5),
+                    // borderRadius: BorderRadius.circular(30)
+                  ),
                   // width: double.infinity,
-                  child:Padding(
+                  child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
                       child: Text(
-                        "youdfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjkyoudfjk",
+                        Constants.suggestion,
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 30,
                 ),
@@ -160,10 +151,12 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                       Text(
                         "Call Emergency Contact Now!",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
                       ),
                       SizedBox(
-                        width : 85,
+                        width: 85,
                       ),
                       socialButtons(
                           color: Colors.green,
@@ -179,7 +172,6 @@ class _healthStatusScreen extends State<healthStatusScreen> {
           ),
         ),
       ),
-
     );
   }
 

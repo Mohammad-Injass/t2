@@ -14,8 +14,8 @@ class UserState extends StatelessWidget {
         builder: (context, userSnapshot) {
           if (userSnapshot.data == null) {
             print('User didn\'t login yet');
-            return homeScreen();
-            //return LoginScreen();
+            // return allWidget();
+            return allWidget();
           } else if (userSnapshot.hasData) {
             print('User is logged in');
             return allWidget();

@@ -79,7 +79,7 @@ class _homeScreenState extends State<homeScreen>
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           child: Text(
-                            'Comtinue',
+                            'Continue',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

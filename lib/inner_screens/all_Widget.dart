@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:t2/widgets/drawer_widget.dart';
 import 'dart:ui';
@@ -20,6 +23,7 @@ class _allWidget extends State<allWidget> {
     apiHeart();
     apiSteps();
     apiCalories();
+    apiSuggestion();
     super.initState();
   }
 
@@ -97,7 +101,7 @@ class _allWidget extends State<allWidget> {
     var headers = {
       'accept': 'application/json',
       'authorization':
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhNQkYiLCJzdWIiOiI5WERXTkoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3aHIgd3BybyB3bnV0IHdzbGUgd3dlaSB3c29jIHdzZXQgd2FjdCB3b3h5IHdsb2Mgd3JlcyIsImV4cCI6MTY1ODYwNTI4NCwiaWF0IjoxNjU2MDEzMjg0fQ.mgCSmvZcxY2O9jhTAiZIOKs7bjtM36Qrh7mU2PiltlA',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhNQkYiLCJzdWIiOiI5WERXTkoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3aHIgd3BybyB3bnV0IHdzbGUgd3dlaSB3c29jIHdzZXQgd2FjdCB3b3h5IHdsb2Mgd3JlcyIsImV4cCI6MTY1ODYwNTI4NCwiaWF0IjoxNjU2MDEzMjg0fQ.mgCSmvZcxY2O9jhTAiZIOKs7bjtM36Qrh7mU2PiltlA',
     };
 
     var url = Uri.parse(
@@ -137,14 +141,13 @@ class _allWidget extends State<allWidget> {
   }
 
   void apiCalories() async {
-
     var currDt = DateTime.now();
     String date = currDt.toString().substring(0, 10);
 
     var headers = {
       'accept': 'application/json',
       'authorization':
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhNQkYiLCJzdWIiOiI5WERXTkoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3aHIgd3BybyB3bnV0IHdzbGUgd3dlaSB3c29jIHdzZXQgd2FjdCB3b3h5IHdsb2Mgd3JlcyIsImV4cCI6MTY1ODYwNTI4NCwiaWF0IjoxNjU2MDEzMjg0fQ.mgCSmvZcxY2O9jhTAiZIOKs7bjtM36Qrh7mU2PiltlA',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhNQkYiLCJzdWIiOiI5WERXTkoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3aHIgd3BybyB3bnV0IHdzbGUgd3dlaSB3c29jIHdzZXQgd2FjdCB3b3h5IHdsb2Mgd3JlcyIsImV4cCI6MTY1ODYwNTI4NCwiaWF0IjoxNjU2MDEzMjg0fQ.mgCSmvZcxY2O9jhTAiZIOKs7bjtM36Qrh7mU2PiltlA',
     };
 
     var url = Uri.parse(
@@ -183,4 +186,65 @@ class _allWidget extends State<allWidget> {
     }
   }
 
+  void apiSuggestion() async {
+    var url1 = Uri.parse(
+        'https://api.ubiops.com/v2.1/projects/smartwatch-recommende-system/deployments/grad-project-1/versions/v1-copy-01yuk-copy-t67m3-copy-nzqhr-copy-se58o/requests');
+
+    var the_json = {
+      "city": "Jerusalem",
+      "heart-information": [13212312312, 77, 88.5],
+      "medicine-name": "Corgard",
+      "phone-accelerometer": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
+      "phone-gyroscope": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
+      "watch-accelerometer": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
+      "watch-gyroscope": [43243523, 43245643, 0.675643, 0.23435, 0.87654]
+    };
+    Map<String, String> headers = {
+      // 'url': url1.toString(),
+      HttpHeaders.authorizationHeader:
+          'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16',
+      'input': the_json.toString(),
+    };
+    var response = await http.post(
+      url1,
+    body: jsonEncode(the_json),
+      headers: {'Authorization':'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16'}
+    );
+    var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+    Constants.suggestion = jsonResponse['result']['result'];
+    print(response.body);
+    print(Constants.suggestion);
+    // var request = new http.MultipartRequest("post", url1);
+    // request.headers.addAll(headers);
+    // request.fields['city'] = "Jerusalem";
+    // request.fields['heart-information'] = jsonEncode([13212312312, 77, 88.5]);
+    // request.fields['medicine-name'] = "congard";
+    // request.fields['phone-accelerometer'] =
+    // jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
+    //
+    // request.fields['phone-gyroscope'] =
+    //     jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
+    // request.fields['watch-accelerometer'] =
+    // jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
+    // request.fields['watch-gyroscope'] =
+    //     jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
+    // http.Response response =
+    // await http.Response.fromStream(await request.send());
+    // print(response.body);
+    // http.post(url1);
+    // http.post(url1,headers: headers,body: the_json.toString());
+    // var res = await http.post(url1, body: headers.toString());
+    // if (res.statusCode == 200) {
+    //   print(res.body);
+    //   var jsonResponse = convert.jsonDecode(res.body) as Map<String, dynamic>;
+    //   Constants.suggestion = jsonResponse.values.toString();
+    //   for (var i in jsonResponse.entries) {
+    //     print(i.toString());
+    //   }
+    //   print('Uploaded! ${response.body} ++ ${response.statusCode}');
+    //   print(Constants.suggestion);
+    // } else {
+    //   print('Request failed with status: ${res.statusCode},${res.body} ');
+    // }
+  }
 }

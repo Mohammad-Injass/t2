@@ -11,17 +11,32 @@ class Constants {
   ];
 
   static List<String> chronicDiseases = [
-
-    'chronicdiseases-1',
-    'chronicdiseases-2',
-    'chronicdiseases-3',
-    'chronicdiseases-4',
-
+    'Coronary Heart Disease',
+    'Hypertension',
+    'High Cholesterol/Lipid Conditions',
+    'Congestive Heart Failure',
+    'Arrhythmias',
+    'Cardiomyopathy',
+    'Valvular Heart Disease',
+    'Congenital Heart Disease',
+    'Rheumatic Heart Disease',
+    'Miscellaneous Related Heart Conditions',
+    'Tricuspid regurgitation',
+    'Mitral valve prolapse',
+    'Mitral stenosis',
+    'Mitral valve regurgitation',
+    'Aortic stenosis',
+    'Tricuspid stenosis',
+    'Coronary artery disease/Ischemic heart disease',
+    'Angina',
+    'Myocardial infarction',
+    'Atherosclerosis ',
   ];
   static List<FlSpot> combinationHeart = [];
   //
-   static List<FlSpot> combinationSteps = [];
+  static List<FlSpot> combinationSteps = [];
 
   static List<FlSpot> combinationCalories = [];
 
+  static String suggestion ="";
 }
