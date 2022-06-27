@@ -115,7 +115,36 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                   height: 15,
                 ),
                 Text(
-                  "Last Suggestion:",
+                  "Last Health Suggestion:",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: secondary.withOpacity(0.5),
+                    // borderRadius: BorderRadius.circular(30)
+                  ),
+                  // width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text(
+                        Constants.suggestion2,
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Medicine Suggestion:",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -148,15 +177,17 @@ class _healthStatusScreen extends State<healthStatusScreen> {
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        "Call Emergency Contact Now!",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red),
-                      ),
-                      SizedBox(
-                        width: 85,
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            "Call Emergency Contact Now!",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red),
+                          ),
+                        ),
                       ),
                       socialButtons(
                           color: Colors.green,

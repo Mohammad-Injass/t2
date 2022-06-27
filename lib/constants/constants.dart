@@ -39,4 +39,7 @@ class Constants {
   static List<FlSpot> combinationCalories = [];
 
   static String suggestion ="";
+
+
+  static String suggestion2 ="";
 }

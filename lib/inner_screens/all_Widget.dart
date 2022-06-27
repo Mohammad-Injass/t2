@@ -23,7 +23,8 @@ class _allWidget extends State<allWidget> {
     apiHeart();
     apiSteps();
     apiCalories();
-    apiSuggestion();
+    apiSuggestionHeart();
+    apiSuggestionGeneral();
     super.initState();
   }
 
@@ -186,18 +187,48 @@ class _allWidget extends State<allWidget> {
     }
   }
 
-  void apiSuggestion() async {
+  void apiSuggestionHeart() async {
     var url1 = Uri.parse(
         'https://api.ubiops.com/v2.1/projects/smartwatch-recommende-system/deployments/grad-project-1/versions/v1-copy-01yuk-copy-t67m3-copy-nzqhr-copy-se58o/requests');
+    var time_now = (new DateTime.now()).millisecondsSinceEpoch.toDouble();
+    double sum = 0;
+    double avgNow = 0;
+    await Constants.combinationHeart;
+    var i = 0;
+    try {
+      for (; i < 10; i++) {
+        sum = sum + Constants.combinationHeart[-i].y;
+      }
+    } catch (something) {
+      sum = 600;
+      i = 10;
+      print("something\n\n\n\n ${something}");
+    }
+    avgNow = sum / i;
+    print("Average heart rate now : ${avgNow}");
+    double avgBefore = 0;
+    i = 0;
+    try {
+      for (; i < 10; i++) {
+        sum = sum + Constants.combinationHeart[-i - 55].y;
+      }
+    } catch (something) {
+      sum = 770;
+      i = 10;
+      print("something\n\n\n\n ${something}");
+    }
+    avgBefore = sum / i;
+    print("Average heart rate before 1 hour : ${avgBefore}");
 
     var the_json = {
       "city": "Jerusalem",
-      "heart-information": [13212312312, 77, 88.5],
+      "heart-information": [time_now, avgNow, avgBefore],
+      "heart-information": [time_now, 88.4, 77],
       "medicine-name": "Corgard",
-      "phone-accelerometer": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
-      "phone-gyroscope": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
-      "watch-accelerometer": [43243523, 43245643, 0.675643, 0.23435, 0.87654],
-      "watch-gyroscope": [43243523, 43245643, 0.675643, 0.23435, 0.87654]
+      "phone-accelerometer": [0, 0, 0, 0, 0],
+      "phone-gyroscope": [0, 0, 0, 0, 0],
+      "watch-accelerometer": [0, 0, 0, 0, 0],
+      "watch-gyroscope": [0, 0, 0, 0, 0]
     };
     Map<String, String> headers = {
       // 'url': url1.toString(),
@@ -205,46 +236,101 @@ class _allWidget extends State<allWidget> {
           'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16',
       'input': the_json.toString(),
     };
-    var response = await http.post(
-      url1,
-    body: jsonEncode(the_json),
-      headers: {'Authorization':'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16'}
-    );
-    var jsonResponse = convert.jsonDecode(response.body) as Map<String, dynamic>;
+    var response = await http.post(url1, body: jsonEncode(the_json), headers: {
+      'Authorization': 'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16'
+    });
+    print(response.body);
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
     Constants.suggestion = jsonResponse['result']['result'];
     print(response.body);
     print(Constants.suggestion);
-    // var request = new http.MultipartRequest("post", url1);
-    // request.headers.addAll(headers);
-    // request.fields['city'] = "Jerusalem";
-    // request.fields['heart-information'] = jsonEncode([13212312312, 77, 88.5]);
-    // request.fields['medicine-name'] = "congard";
-    // request.fields['phone-accelerometer'] =
-    // jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
-    //
-    // request.fields['phone-gyroscope'] =
-    //     jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
-    // request.fields['watch-accelerometer'] =
-    // jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
-    // request.fields['watch-gyroscope'] =
-    //     jsonEncode([43243523, 43245643, 0.675643, 0.23435, 0.87654]);
-    // http.Response response =
-    // await http.Response.fromStream(await request.send());
-    // print(response.body);
-    // http.post(url1);
-    // http.post(url1,headers: headers,body: the_json.toString());
-    // var res = await http.post(url1, body: headers.toString());
-    // if (res.statusCode == 200) {
-    //   print(res.body);
-    //   var jsonResponse = convert.jsonDecode(res.body) as Map<String, dynamic>;
-    //   Constants.suggestion = jsonResponse.values.toString();
-    //   for (var i in jsonResponse.entries) {
-    //     print(i.toString());
-    //   }
-    //   print('Uploaded! ${response.body} ++ ${response.statusCode}');
-    //   print(Constants.suggestion);
-    // } else {
-    //   print('Request failed with status: ${res.statusCode},${res.body} ');
-    // }
+  }
+
+  void apiSuggestionGeneral() async {
+    var url1 = Uri.parse(
+        'https://api.ubiops.com/v2.1/projects/smartwatch-recommende-system/deployments/grad-project-1/versions/v1-copy-01yuk-copy-t67m3-copy-nzqhr-copy-se58o/requests');
+    var time_now = (new DateTime.now()).millisecondsSinceEpoch.toDouble();
+    double sum = 0;
+    double avgCal = 0;
+    var i = 0;
+    try {
+      for (; i < 30; i++) {
+        sum = sum + Constants.combinationCalories[-i].y;
+      }
+    } catch (error) {
+      sum = 15;
+      i = 10;
+      print("error\n\n\n\n ${error}");
+    }
+    avgCal = sum / i;
+    print("Avg Cal = ${avgCal}");
+    sum = 0;
+    double avgSteps = 0;
+    i = 0;
+    try {
+      for (; i < 30; i++) {
+        sum = sum + Constants.combinationSteps[-i].y;
+      }
+    } catch (error) {
+      sum = 190;
+      i = 10;
+      print("error\n\n\n\n ${error}");
+    }
+    avgSteps = sum / i;
+    print("Avg Steps = ${avgSteps}");
+
+    var the_json = {
+      "city": "Jerusalem",
+      "heart-information": [],
+      "medicine-name": "corgard",
+      "phone-accelerometer": [
+        time_now,
+        time_now,
+        avgSteps / 30,
+        avgSteps / 28,
+        avgSteps / 44
+      ],
+      "phone-gyroscope": [
+        time_now,
+        time_now,
+        avgCal / 30,
+        avgCal / 28,
+        avgCal / 44
+      ],
+      "watch-accelerometer": [
+        time_now,
+        time_now,
+        avgSteps / 30,
+        avgSteps / 28,
+        avgSteps / 44
+      ],
+      "watch-gyroscope": [
+        time_now,
+        time_now,
+        avgCal / 30,
+        avgCal / 28,
+        avgCal / 44
+      ]
+      // "phone-accelerometer": [time_now, time_now, 0.2625152, 0.2625152, 0.2625152],
+      // "phone-gyroscope": [time_now, time_now, 0.2625152, 0.2625152, 0.2625152],
+      // "watch-accelerometer": [time_now, time_now, 0.2625152, 0.2625152, 0.2625152],
+      // "watch-gyroscope": [time_now, time_now, 0.2625152, 0.2625152, 0.2625152]
+    };
+    Map<String, String> headers = {
+      // 'url': url1.toString(),
+      HttpHeaders.authorizationHeader:
+          'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16',
+      'input': the_json.toString(),
+    };
+    var response = await http.post(url1, body: jsonEncode(the_json), headers: {
+      'Authorization': 'Token 3c3e5a7a99bac8d802642ac15091ecc38c2d5a16'
+    });
+    print(response.body);
+    var jsonResponse =
+        await convert.jsonDecode(response.body) as Map<String, dynamic>;
+    Constants.suggestion2 = jsonResponse['result']['result'];
+    print(response.body);
+    print(Constants.suggestion2);
   }
 }
