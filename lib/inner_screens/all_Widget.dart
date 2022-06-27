@@ -11,6 +11,7 @@ import '../constants/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:t2/constants/constants.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class allWidget extends StatefulWidget {
   @override
@@ -37,13 +38,129 @@ class _allWidget extends State<allWidget> {
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          'all Widget',
+          'Main Screen',
           style: TextStyle(color: Colors.pink),
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Text('test : allWidget'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Container(
+            //   width: 320,
+            //   child: Text(
+            //     'Go to Health Status Screen from the menu on the top left corner to see your',
+            //     style: TextStyle(
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              height: 230,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AnimatedTextKit(
+                // isRepeatingAnimation: false,
+                repeatForever: true,
+                animatedTexts: [
+                  FadeAnimatedText(
+                    "Go to Health Status Screen from the menu on the top left corner to see your",
+                    duration: const Duration(milliseconds: 99999000),
+                    fadeOutBegin: 1,
+                    fadeInEnd: 0.00008,
+                    textAlign: TextAlign.center,
+                    textStyle: TextStyle(
+                      fontSize: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            AnimatedTextKit(
+              repeatForever: true,
+              animatedTexts: [
+                ColorizeAnimatedText(
+                  "Heart Rate",
+                  colors: [Colors.red,Colors.brown,Colors.white38,Colors.brown,Colors.red],
+                  speed: const Duration(milliseconds: 500),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+
+                  ),
+                ),
+                ColorizeAnimatedText(
+                  "Calories",
+                  colors: [Colors.red,Colors.brown,Colors.white38,Colors.brown,Colors.red],
+                  speed: const Duration(milliseconds: 500),
+
+                  textStyle: TextStyle(
+                    fontSize: 20,
+
+                  ),
+                ),
+                ColorizeAnimatedText(
+                  "Steps",
+                  colors: [Colors.red,Colors.brown,Colors.white38,Colors.brown,Colors.red],
+                  speed: const Duration(milliseconds: 500),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+
+                  ),
+                ),
+                ColorizeAnimatedText(
+                  "Suggestion",
+                  colors: [Colors.red,Colors.brown,Colors.white38,Colors.brown,Colors.red],
+                  speed: const Duration(milliseconds: 500),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+
+                  ),
+                ),
+                ColorizeAnimatedText(
+                  "Medicine Take Checker",
+                  colors: [Colors.red,Colors.brown,Colors.white38,Colors.brown,Colors.red],
+                  speed: const Duration(milliseconds: 500),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+
+                  ),
+                ),
+                // RotateAnimatedText(
+                //   "Heart Rate",
+                //   textStyle: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+                // RotateAnimatedText(
+                //   "Calories",
+                //   textStyle: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+                // RotateAnimatedText(
+                //   "Steps",
+                //   textStyle: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+                // RotateAnimatedText(
+                //   "Suggestion",
+                //   textStyle: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+                // RotateAnimatedText(
+                //   "Medicine Take Checker",
+                //   textStyle: TextStyle(
+                //     fontSize: 20,
+                //   ),
+                // ),
+              ],
+            ),
+          ],
         ),
       ),
     );
